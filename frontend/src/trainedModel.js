@@ -17,8 +17,11 @@ export const trainedModel = async (financialData) => {
       );
     }
 
+    // Get API URL from environment variable or fallback to localhost
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+    
     // Make the API request
-    const res = await fetch("http://localhost:3001/api/train", {
+    const res = await fetch(`${API_URL}/api/train`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
