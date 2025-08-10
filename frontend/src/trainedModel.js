@@ -18,9 +18,11 @@ export const trainedModel = async (financialData) => {
     }
 
     // Get API URL from environment variable or fallback to production URL
+    // Force use of the render URL in production to avoid CORS issues
     const API_URL =
-      import.meta.env.VITE_API_URL ||
-      "https://tensorfinance-advisor.onrender.com";
+      import.meta.env.MODE === "production"
+        ? "https://tensorfinance-advisor.onrender.com"
+        : import.meta.env.VITE_API_URL || "http://localhost:3001";
 
     console.log("Using API URL:", API_URL); // Debug logging
     console.log("Environment:", import.meta.env.MODE); // Log the current environment
@@ -35,10 +37,10 @@ export const trainedModel = async (financialData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(financialData),
-      credentials: "include",
-    });
-
-    // Check if the request was successful
+      // Don't use credentials for cross-origin requests unless absolutely necessary
+      // as it requires additional CORS configuration
+      // credentials: "include",
+    }); // Check if the request was successful
     if (!res.ok) {
       const errorText = await res.text();
       console.error("API Error:", errorText);
