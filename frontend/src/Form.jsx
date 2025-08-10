@@ -54,7 +54,7 @@ const Form = () => {
     <div className="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-md">
         <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
-          Financial Recommendations
+          TensorFinance-Advisor
         </h1>
         <p className="text-center text-gray-600 mb-6">
           Enter your income to get personalized financial recommendations
