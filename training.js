@@ -11,17 +11,50 @@ export const trainModel = async () => {
 
     const TrainingData = () => {
       return {
-        income: tf.tensor2d([2000, 4000, 6000, 8000, 10000], [5, 1]),
-        savings: tf.tensor2d([200, 400, 600, 800, 1000], [5, 1]),
-        retirement: tf.tensor2d([300, 600, 900, 1200, 1500], [5, 1]),
-        expenses: tf.tensor2d([1500, 2500, 3500, 4500, 5500], [5, 1]),
-        investments: tf.tensor2d([250, 500, 750, 1000, 1250], [5, 1]),
+        income: tf.tensor2d(
+          [
+            1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000,
+            10000, 12000, 15000,
+          ],
+          [14, 1]
+        ),
+        savings: tf.tensor2d(
+          [
+            150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 900, 1000, 1200,
+            1500,
+          ],
+          [14, 1]
+        ),
+        retirement: tf.tensor2d(
+          [
+            225, 300, 375, 450, 525, 600, 750, 900, 1050, 1200, 1350, 1500,
+            1800, 2250,
+          ],
+          [14, 1]
+        ),
+        expenses: tf.tensor2d(
+          [
+            1125, 1500, 1875, 2100, 2300, 2500, 3000, 3500, 4000, 4500, 5000,
+            5500, 6500, 8000,
+          ],
+          [14, 1]
+        ),
+        investments: tf.tensor2d(
+          [
+            190, 250, 310, 375, 440, 500, 625, 750, 875, 1000, 1125, 1250, 1500,
+            1875,
+          ],
+          [14, 1]
+        ),
       };
     };
 
     const TestData = () => {
       return {
-        income: tf.tensor2d([1000, 3000, 5000, 7000, 9000], [5, 1]),
+        income: tf.tensor2d(
+          [1000, 2250, 3500, 4500, 5500, 7500, 9500, 11000, 13000, 16000],
+          [10, 1]
+        ),
       };
     };
 
@@ -32,9 +65,17 @@ export const trainModel = async () => {
     // First layer (hidden layer)
     model.add(
       tf.layers.dense({
-        units: 4, // Number of neurons
+        units: 8, // Increased number of neurons for better learning
         activation: "relu", // ReLU activation function
         inputShape: [1], // 1 input feature
+      })
+    );
+
+    // Add a second hidden layer for better pattern recognition
+    model.add(
+      tf.layers.dense({
+        units: 6, // Slightly fewer neurons in second layer
+        activation: "relu",
       })
     );
 
@@ -49,11 +90,20 @@ export const trainModel = async () => {
 
     // Create a combined output tensor with all three values
     const combinedOutput = tf.tensor2d([
-      [200, 300, 250], // [savings, retirement, investments] for income 2000
+      [150, 225, 190], // for income 1500
+      [200, 300, 250], // for income 2000
+      [250, 375, 310], // for income 2500
+      [300, 450, 375], // for income 3000
+      [350, 525, 440], // for income 3500
       [400, 600, 500], // for income 4000
+      [500, 750, 625], // for income 5000
       [600, 900, 750], // for income 6000
+      [700, 1050, 875], // for income 7000
       [800, 1200, 1000], // for income 8000
+      [900, 1350, 1125], // for income 9000
       [1000, 1500, 1250], // for income 10000
+      [1200, 1800, 1500], // for income 12000
+      [1500, 2250, 1875], // for income 15000
     ]);
 
     console.log(
@@ -66,7 +116,7 @@ export const trainModel = async () => {
 
     // Log training progress - only use income and combined output
     const output = await model.fit(trainData.income, combinedOutput, {
-      epochs: 1000,
+      epochs: 1500, // Increased for better learning with more data
       verbose: 1,
       callbacks: {
         onEpochEnd: (epoch, logs) => {
