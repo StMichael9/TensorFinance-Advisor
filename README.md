@@ -1,7 +1,7 @@
 ﻿# TensorFinance-Advisor
 
 🚀 Live Demo
-Check it out here: [TensorFinance Advisor Live]([https://your-hosted-link.com](https://tensor-finance-advisor.vercel.app)
+Check it out here: https://tensor-finance-advisor.vercel.app
 
  Overview:
 
@@ -34,3 +34,4 @@ Improve model accuracy with more training data
 Provide visual charts for financial recommendations
 
 Expand advice categories (e.g., debt repayment, emergency fund)
+
